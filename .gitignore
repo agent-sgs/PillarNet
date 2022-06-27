@@ -1,0 +1,6 @@
+data/
+work_dirs
+**build
+**__pycache__
+.idea/
+**/*.so

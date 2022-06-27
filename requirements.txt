@@ -1,0 +1,13 @@
+pip --no-cache-dir install timm
+
+pip --no-cache-dir install fire cython protobuf opencv-python pybind11 easydict terminaltables pytest-runner addict
+pip --no-cache-dir install imagecorruptions objgraph cachetools
+pip --no-cache-dir install pandas descartes matplotlib terminaltables
+pip --no-cache-dir install Pillow==6.2.1 scikit-learn Shapely tqdm pyyaml requests nuscenes-devkit==1.0.5
+pip --no-cache-dir install pycocotools 
+
+
+
+pip --no-cache-dir install torch==1.8.0 torchvision==0.9.0
+
+conda install pytorch==1.8.0 torchvision==0.9.0 cudatoolkit=10.2 -c pytorch
