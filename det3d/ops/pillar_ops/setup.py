@@ -10,7 +10,7 @@ setup(
     name='pillar_cuda_ops',
     ext_modules=[
         CUDAExtension(
-            name='pillar_cuda',
+            name='points_cuda',
             sources=src_files,
             # include_dirs=[' '],
             # libraries=['cuhash'],

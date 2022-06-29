@@ -4,8 +4,7 @@ import torch, math
 from typing import List
 from torch.autograd import Variable
 from torch.autograd import Function
-from . import pillar_cuda
-
+from . import points_cuda
 
 class FlattenIndices(Function):
     @staticmethod
@@ -26,7 +25,7 @@ class FlattenIndices(Function):
         first_indices = torch.zeros(L, dtype=torch.int32, device=indice_pairs.device, requires_grad=False)
         second_indices = torch.zeros(L, dtype=torch.int32, device=indice_pairs.device, requires_grad=False)
 
-        pillar_cuda.flatten_indice_pairs_wrapper(indice_pairs, position, first_indices, second_indices)
+        points_cuda.flatten_indice_pairs_wrapper(indice_pairs, position, first_indices, second_indices)
 
         return first_indices, second_indices
 
@@ -42,7 +41,7 @@ class GatherFeature(Function):
     def forward(ctx, features:torch.Tensor, set_indices:torch.Tensor):
 
         new_features = features.new_zeros((set_indices.shape[0], features.shape[1]))
-        pillar_cuda.gather_feature_wrapper(set_indices, features, new_features)
+        points_cuda.gather_feature_wrapper(set_indices, features, new_features)
 
         ctx.for_backwards = (features.shape[0], features.shape[1], set_indices)
         return new_features
@@ -53,7 +52,7 @@ class GatherFeature(Function):
         grad_features = Variable(torch.cuda.FloatTensor(N, C).zero_())
         grad_out_data = grad_out.data.contiguous()
 
-        pillar_cuda.gather_feature_grad_wrapper(set_indices, grad_out_data, grad_features)
+        points_cuda.gather_feature_grad_wrapper(set_indices, grad_out_data, grad_features)
         return grad_features, None
 
 gather_feature = GatherFeature.apply

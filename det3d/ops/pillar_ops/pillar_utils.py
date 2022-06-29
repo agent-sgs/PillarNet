@@ -3,7 +3,7 @@ from typing import List
 import torch.nn as nn
 from torch.autograd import Function
 from torch.autograd import Variable
-from . import pillar_cuda
+from . import points_cuda
 from .group_utils import gather_feature, flatten_indices
 
 
@@ -83,14 +83,14 @@ class GenPillarsIndices(Function):
         device = xyz.device
         pillar_mask = torch.zeros([B, H, W], dtype=torch.bool, device=device)
 
-        pillar_cuda.create_pillar_indices_stack_wrapper(bev_size, xyz, xyz_batch_cnt, pillar_mask)
+        points_cuda.create_pillar_indices_stack_wrapper(bev_size, xyz, xyz_batch_cnt, pillar_mask)
 
         location = torch.cumsum(pillar_mask.view(-1), 0).int()
         M = location[-1].item()
         pillar_bev_indices = location.view(B, H, W) * pillar_mask - 1
         # create indices (M, 3) [byx]
         pillars = torch.zeros([M, 3], dtype=torch.int32, device=device)
-        pillar_cuda.create_pillar_indices_wrapper(pillar_bev_indices, pillars)
+        points_cuda.create_pillar_indices_wrapper(pillar_bev_indices, pillars)
 
         return pillars, pillar_bev_indices
 
@@ -113,7 +113,7 @@ class GenIndicePairs(Function):
         indice_pairs = torch.full([xyz.shape[0], K], -1, dtype=torch.int32, device=device)
         bev_mask = torch.zeros([B, H, W], dtype=torch.bool, device=device)
 
-        pillar_cuda.create_pillar_indice_pairs_stack_wrapper(radius, bev_size, xyz, xyz_batch_cnt,
+        points_cuda.create_pillar_indice_pairs_stack_wrapper(radius, bev_size, xyz, xyz_batch_cnt,
                                                              bev_mask, indice_pairs)
         location = torch.cumsum(bev_mask.view(-1), 0).int()
         M = location[-1].item()
@@ -121,8 +121,8 @@ class GenIndicePairs(Function):
         # create indices (M, 3) [byx]
         pillars = torch.zeros([M, 3], dtype=torch.int32, device=device)
 
-        pillar_cuda.create_pillar_indices_wrapper(location, pillars)
-        pillar_cuda.update_indice_pairs_wrapper(location, indice_pairs)
+        points_cuda.create_pillar_indices_wrapper(location, pillars)
+        points_cuda.update_indice_pairs_wrapper(location, indice_pairs)
 
         # create pillar center [x y z]
         pillar_centers = torch.zeros([M, 3], dtype=torch.float32, device=device, requires_grad=False)
@@ -132,7 +132,7 @@ class GenIndicePairs(Function):
 
         if bev_flag:
             indice2bev = torch.zeros([M], dtype=torch.int32, device=device)
-            pillar_cuda.create_indice2bev_kernel_wrapper(location, indice2bev)
+            points_cuda.create_indice2bev_kernel_wrapper(location, indice2bev)
             return pillar_centers, pillars, indice_pairs, indice2bev
         else:
             return pillar_centers, pillars, indice_pairs, torch.ones(1)
@@ -167,13 +167,13 @@ class GenIndicePairs(Function):
 
         device = xyz.device
         pillar_mask = torch.zeros([B, H, W], dtype=torch.bool, device=device)
-        pillar_cuda.create_pillar_indices_stack_wrapper(bev_size, xyz, xyz_batch_cnt, pillar_mask)
+        points_cuda.create_pillar_indices_stack_wrapper(bev_size, xyz, xyz_batch_cnt, pillar_mask)
         location = torch.cumsum(pillar_mask.view(-1), 0).int()
         M = location[-1].item()
         pillar_bev_indices = location.view(B, H, W) * pillar_mask - 1
         # create indices (M, 3) [byx]
         pillars = torch.zeros([M, 3], dtype=torch.int32, device=device)
-        pillar_cuda.create_pillar_indices_wrapper(pillar_bev_indices, pillars)
+        points_cuda.create_pillar_indices_wrapper(pillar_bev_indices, pillars)
 
         indice_pairs = torch.full([xyz.shape[0], 1], -1, dtype=torch.int32, device=device)
 
@@ -183,7 +183,7 @@ class GenIndicePairs(Function):
         pillar_centers[:, 1] = (pillars[:, 1] + 0.5) * bev_size
         pillar_centers[:, 2] = z_center
 
-        pillar_cuda.create_pillar_indice_pairs_stack_wrapper(bev_size, xyz, xyz_batch_cnt,
+        points_cuda.create_pillar_indice_pairs_stack_wrapper(bev_size, xyz, xyz_batch_cnt,
                                                                 pillar_bev_indices, indice_pairs)
 
         return pillars, pillar_centers, indice_pairs

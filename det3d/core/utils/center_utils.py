@@ -182,7 +182,7 @@ def bbox3d_overlaps_iou(pred_boxes, gt_boxes):
     gcorners = center_to_corner2d(gt_boxes[:, :2], gt_boxes[:, 3:5])
 
     inter_max_xy = torch.maximum(qcorners[:, 2], gcorners[:, 2])
-    inter_min_xy = torch.maximum(qcorners[:, 0], gcorners[:, 0])
+    inter_min_xy = torch.minimum(qcorners[:, 0], gcorners[:, 0])
 
     # calculate area
     volume_pred_boxes = pred_boxes[:, 3] * pred_boxes[:, 4] * pred_boxes[:, 5]
