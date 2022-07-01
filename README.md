@@ -27,6 +27,7 @@ This is the official implementation of PillarNet, a simple and high-performance 
 Any questions or suggestions are welcome! 
 
 Guangsheng Shi [sgsadvance@163.com](mailto:sgsadvance@163.com) 
+WeChat: 15158086470
 
 There are still some engineering techniques that we believe can be used to reduce runtime while maintaining accuracy, which we will continue to update later.
 The possible solutions may be the input point cloud sub-sampling or streaming pillarization as the LiDAR scanning. 
