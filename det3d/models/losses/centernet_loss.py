@@ -18,7 +18,7 @@ class RegLoss(nn.Module):
   
   def forward(self, output, mask, ind, target):
     if mask.sum() == 0:
-      return output.new_zeros((1))
+      return output.new_zeros((target.shape[-1]))
     pred = _transpose_and_gather_feat(output, ind)
     mask = mask.float().unsqueeze(2)
 
