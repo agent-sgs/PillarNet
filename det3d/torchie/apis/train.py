@@ -323,4 +323,4 @@ def train_detector(model, dataset, cfg, distributed=False, validate=False, logge
     elif cfg.load_from:
         trainer.load_checkpoint(cfg.load_from)
 
-    trainer.run(data_loaders, cfg.workflow, cfg.total_epochs, local_rank=cfg.local_rank, fade_epochs=cfg.fade_epochs)
+    trainer.run(data_loaders, cfg.workflow, cfg.total_epochs, local_rank=cfg.local_rank)

@@ -28,7 +28,6 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Train a detector")
     parser.add_argument("config", help="train config file path")
     parser.add_argument("--work_dir", help="the dir to save logs and models")
-    parser.add_argument("--fade_epochs", default=1000, help="the start epochs to be end db_sample.")
     parser.add_argument("--resume_from", help="the checkpoint file to resume from")
     parser.add_argument(
         "--validate",
@@ -77,7 +76,6 @@ def main():
         cfg.work_dir = args.work_dir
     if args.resume_from is not None:
         cfg.resume_from = args.resume_from
-    cfg.fade_epochs = args.fade_epochs
 
     distributed = False
     if "WORLD_SIZE" in os.environ:

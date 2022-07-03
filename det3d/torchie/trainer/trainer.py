@@ -510,7 +510,6 @@ class Trainer(object):
         assert len(data_loaders) == len(workflow)
 
         self._max_epochs = max_epochs
-        self._fade_epochs = kwargs.get('fade_epochs', max_epochs)
         work_dir = self.work_dir if self.work_dir is not None else "NONE"
         self.logger.info(
             "Start running, host: %s, work_dir: %s", get_host_info(), work_dir
@@ -536,9 +535,6 @@ class Trainer(object):
                         "mode in workflow must be a str or "
                         "callable function not '{}'".format(type(mode))
                     )
-
-                if self.epoch >= self._fade_epochs:
-                    data_loaders[i].dataset.pipeline.transforms[2].db_sampler = None
 
                 for _ in range(epochs):
                     if mode == "train" and self.epoch >= max_epochs:
