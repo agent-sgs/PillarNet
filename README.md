@@ -7,7 +7,7 @@ Pillar-based single-stage 3D object detector using center-based head in the bird
 
 
 
-This is the official implementation of PillarNet, a simple and high-performance pillar-based framework for 3D object detection. For more details, please refer to: 
+This is the official implementation of PillarNet, a simple and high-performance pillar-based framework for 3D object detection. For more details, please refer to:
 
 <p align="center"> <img src='docs/pipeline.bmp' align="center" height="230px"> </p>
 
@@ -18,8 +18,17 @@ This is the official implementation of PillarNet, a simple and high-performance 
       year={2022},
     }
 
+```html
+<video id="video" controls="" preload="none">
+   <source id="mp4" src="demo sequences.mp4" controls="controls">This cannot be supported by current browser.
+</video>
+```
+
+
 
 ## NEWS
+
+[2022-7-4]  PillarNet is accepted by ECCV 2022. 
 
 [2022-6-6]  PillarNet achieves a good trade-off between performance and speed for point cloud 3D object detection. 
 
@@ -59,7 +68,7 @@ In contrast with our used codebase [CenterPoint](https://github.com/tianweiy/Cen
 
 ```
 det3d/ops/pillar_ops  (lossless pillarization from raw point clouds)
-det3d/models/backbones/pcn.py (backbone for PillarNet)
+det3d/models/backbones/pcnvgg.py/pcnres18.py/pcnres34.py (backbone for PillarNet)
 ```
 **Note:**
 
