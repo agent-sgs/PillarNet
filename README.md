@@ -19,8 +19,7 @@ This is the official implementation of PillarNet, a simple and high-performance 
     }
 
 ```html
-<video id="video" controls="" preload="none">
-   <source id="mp4" src="demo sequences.mp4" controls="controls">This cannot be supported by current browser.
+<video src="demo sequences.mp4" controls>This cannot be supported by current browser.
 </video>
 ```
 
