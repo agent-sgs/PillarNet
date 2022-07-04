@@ -18,11 +18,6 @@ This is the official implementation of PillarNet, a simple and high-performance 
       year={2022},
     }
 
-```html
-<video src="demo sequences.mp4" controls>This cannot be supported by current browser.
-</video>
-```
-
 
 ## NEWS
 
