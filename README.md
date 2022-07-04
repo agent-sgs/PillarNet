@@ -25,7 +25,6 @@ This is the official implementation of PillarNet, a simple and high-performance 
 ```
 
 
-
 ## NEWS
 
 [2022-7-4]  PillarNet is accepted by ECCV 2022. 
@@ -63,7 +62,6 @@ Our pre-trained models uses the spconv-2.x and PyTorch ==1.8.2.
 
 Please refer to CenterPoint for the installation and data preparation of PillarNet.
 
-
 In contrast with our used codebase [CenterPoint](https://github.com/tianweiy/CenterPoint), solely small core codes can power PillarNet and also transfer to other codebase such as [mmdetection3d](https://github.com/open-mmlab/mmdetection3d) and [OpenPCDet](https://github.com/open-mmlab/OpenPCDet.git).
 
 ```
@@ -75,7 +73,6 @@ det3d/models/backbones/pcnvgg.py/pcnres18.py/pcnres34.py (backbone for PillarNet
 - we also reduce the channel of conv4 from 256 (reported in paper) to 128 and find the similar performance while consuming less latency. 
 
   Thus, further work will be to search a better combination of conv block numbers and its feature channels in each stage using NAS.
-
 
 
 ## Acknowlegement
