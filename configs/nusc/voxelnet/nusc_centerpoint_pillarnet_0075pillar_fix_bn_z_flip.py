@@ -26,8 +26,7 @@ model = dict(
     pretrained=None,
     reader=dict(type="Identity", pc_range=[-54, -54, -5.0, 54, 54, 3.0], num_input_features=2),
     backbone=dict(
-        type="SpMiddlePillarEncoder18", ds_factor=8,
-        pc_range=[-54, -54, -5.0, 54, 54, 3.0],
+        type="SpMiddlePillarEncoder18", ds_factor=8, pc_range=[-54, -54, -5.0, 54, 54, 3.0],
         pillar_cfg=dict(
             pool0=dict(bev=0.075 / 2),
             pool1=dict(bev=0.075),

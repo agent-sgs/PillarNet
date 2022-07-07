@@ -56,6 +56,7 @@ model = dict(
         common_heads={'reg': (2, 2), 'height': (1, 2), 'dim': (3, 2), 'rot': (2, 2), 'vel': (2, 2), 'iou': (1, 2)},
         share_conv_channel=64,
         dcn_head=False,
+        iou_reg='DIoU',
     ),
 )
 
@@ -85,7 +86,7 @@ test_cfg = dict(
     ),
     score_threshold=0.1,
     pc_range=[-54, -54],
-    rectifier=0,
+    rectifier=0.5,
     out_size_factor=get_downsample_factor(model),
     voxel_size=[0.075, 0.075],
     double_flip=DOUBLE_FLIP
